@@ -200,7 +200,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
       
-      {/* STICKY HEADER */}
+      {/* STICKY HEADER - NO TABS */}
       <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
         <Header 
             currentLang={uiLanguage} 
@@ -209,8 +209,8 @@ const AppContent: React.FC = () => {
         />
       </div>
 
-      {/* Main Content - Restricted to max-w-5xl for a cleaner, less stretched look */}
-      <main className="flex-grow w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+      {/* Main Content - max-w-6xl for balanced width */}
+      <main className="flex-grow w-full max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
             
         {/* PILL STYLE MODE SWITCHER */}
         <div className="flex justify-center mt-2 mb-6">

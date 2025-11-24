@@ -21,7 +21,7 @@ export const FrameworkSelector: React.FC<FrameworkSelectorProps> = ({ selected, 
       <label className="block text-sm font-bold text-[#1E2A38] dark:text-slate-200">
         {TRANSLATIONS.selectFramework[currentLang]}
       </label>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {displayedFrameworks.map((fw) => {
           const details = FRAMEWORK_DETAILS[fw];
           const Icon = details.icon;
