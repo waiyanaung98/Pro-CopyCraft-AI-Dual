@@ -15,7 +15,7 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
 
   return (
     <header className="bg-white dark:bg-[#1E2A38] border-b border-gray-100 dark:border-gray-800 sticky top-0 z-30 shadow-sm transition-colors duration-300">
-      <div className="w-full max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="w-full max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* Gradient Logo Box */}
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg bg-gradient-to-br from-[#1E2A38] to-[#31d190]">
