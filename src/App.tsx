@@ -211,8 +211,8 @@ const AppContent: React.FC = () => {
         toggleTheme={() => setIsDarkMode(!isDarkMode)} 
       />
 
-      {/* Main Container - Full Width Stacked Layout */}
-      <main className="flex-grow max-w-3xl mx-auto px-4 py-8 w-full space-y-8">
+      {/* Main Container - Full Width Stacked Layout (max-w-7xl) */}
+      <main className="flex-grow max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
           
           {/* Section 1: CONTROLS & INPUTS */}
           <div className="space-y-6">
