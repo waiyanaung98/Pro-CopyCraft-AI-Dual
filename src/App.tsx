@@ -7,12 +7,12 @@ import { BrandManager } from './components/BrandManager';
 import { Language, Framework, Tone, ContentRequest, ContentPillar, BrandProfile, AppMode } from './types';
 import { generateCopy } from './services/geminiService';
 import { TRANSLATIONS, DEFAULT_BRANDS } from './constants';
-import { PenTool, Video, Lock, Crown, Sun, Moon, ShieldAlert } from 'lucide-react';
+import { PenTool, Video, Lock, Crown, ShieldAlert } from 'lucide-react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-// Main Content Component wrapped inside AuthProvider later
+// Main Content Component wrapped inside AuthProvider
 const AppContent: React.FC = () => {
-  const { user, loading: authLoading, isAccessDenied, login, logout, upgradeToPremium } = useAuth();
+  const { user, loading: authLoading, isAccessDenied, login, logout } = useAuth();
   
   // UI Language default to English
   const [uiLanguage] = useState<Language>(Language.EN);
@@ -82,11 +82,9 @@ const AppContent: React.FC = () => {
   };
 
   const handleModeChange = (mode: AppMode) => {
-    // Check for Premium Requirement
+    // Check for Premium Requirement for Script Writing
     if (mode === AppMode.SCRIPT && user?.plan !== 'premium') {
-      // Don't switch, maybe show modal or alert. 
-      // For now, the UI logic below handles the "Locked" state visualization better.
-      return; 
+      return; // Do nothing, or show modal
     }
 
     // Reset framework to default of that mode when switching
@@ -190,14 +188,13 @@ const AppContent: React.FC = () => {
               </svg>
               {TRANSLATIONS.loginBtn[uiLanguage]}
             </button>
+            <button 
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="mt-6 flex items-center justify-center gap-2 mx-auto text-sm text-slate-400 hover:text-[#31d190] transition-colors"
+            >
+              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+            </button>
          </div>
-         {/* Simple Dark Mode Toggle for Login Screen */}
-         <button 
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            className="mt-6 p-2 rounded-full text-slate-400 hover:text-[#31d190] transition-colors"
-         >
-           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-         </button>
       </div>
     );
   }
@@ -205,128 +202,107 @@ const AppContent: React.FC = () => {
   // -- MAIN APP --
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
-      <Header 
-        currentLang={uiLanguage} 
-        isDarkMode={isDarkMode} 
-        toggleTheme={() => setIsDarkMode(!isDarkMode)} 
-      />
+      
+      {/* COMBINED STICKY HEADER & TABS CONTAINER */}
+      <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
+        <Header 
+            currentLang={uiLanguage} 
+            isDarkMode={isDarkMode} 
+            toggleTheme={() => setIsDarkMode(!isDarkMode)} 
+        />
 
-      {/* Main Container - Full Width Stacked Layout (max-w-7xl) */}
-      <main className="flex-grow max-w-7xl mx-auto px-4 py-8 w-full space-y-8">
-          
-          {/* Section 1: CONTROLS & INPUTS */}
-          <div className="space-y-6">
-            
-            {/* Brand Manager Section */}
-            <section>
-              <BrandManager 
-                brands={brands}
-                selectedBrandId={selectedBrandId}
-                onSelectBrand={setSelectedBrandId}
-                onAddBrand={handleAddBrand}
-                onDeleteBrand={handleDeleteBrand}
-                currentLang={uiLanguage}
-              />
-            </section>
-
-            {/* Mode Switcher with Premium Lock */}
-            <section className="bg-white dark:bg-[#1E2A38] p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex relative">
-               <button
+        {/* FULL WIDTH MODE TABS */}
+        <div className="flex w-full">
+            <button
                 onClick={() => handleModeChange(AppMode.COPY)}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-200 z-10 ${
-                  formData.mode === AppMode.COPY
-                    ? 'bg-[#31d190] text-white shadow-md'
-                    : 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+                className={`flex-1 py-4 flex items-center justify-center gap-3 text-lg font-bold transition-all relative outline-none ${
+                formData.mode === AppMode.COPY
+                    ? 'text-[#1E2A38] dark:text-white bg-slate-50 dark:bg-[#0f172a]/30'
+                    : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0f172a]/20'
                 }`}
-               >
-                 <PenTool size={16} />
-                 {TRANSLATIONS.modeCopy[uiLanguage]}
-               </button>
-               
-               <div className="flex-1 relative">
-                 <button
-                  onClick={() => handleModeChange(AppMode.SCRIPT)}
-                  disabled={user.plan !== 'premium'}
-                  className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-bold transition-all duration-200 z-10 ${
-                    formData.mode === AppMode.SCRIPT
-                      ? 'bg-[#31d190] text-white shadow-md'
-                      : user.plan === 'premium' 
-                        ? 'text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
-                        : 'text-slate-300 dark:text-slate-600 cursor-not-allowed bg-slate-50 dark:bg-[#0f172a]/50'
-                  }`}
-                 >
-                   <Video size={16} />
-                   {TRANSLATIONS.modeScript[uiLanguage]}
-                   {user.plan !== 'premium' && <Lock size={14} className="text-slate-400" />}
-                 </button>
-               </div>
-            </section>
+            >
+                <PenTool size={20} className={formData.mode === AppMode.COPY ? 'text-[#31d190]' : ''} />
+                {TRANSLATIONS.modeCopy[uiLanguage]}
+                {formData.mode === AppMode.COPY && (
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-[#31d190]"></div>
+                )}
+            </button>
 
-            {/* Premium Upsell Card if trying to access Script Mode */}
-            {user.plan !== 'premium' && (
-              <div className="bg-gradient-to-br from-[#1E2A38] to-[#111827] rounded-xl p-5 text-white relative overflow-hidden shadow-lg border border-[#31d190]/20">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                   <Crown size={100} />
-                </div>
-                <div className="relative z-10">
-                  <h3 className="flex items-center gap-2 font-bold text-[#31d190] mb-2">
-                    <Crown size={18} />
-                    {TRANSLATIONS.premiumLock[uiLanguage]}
-                  </h3>
-                  <p className="text-sm text-slate-300 mb-4 leading-relaxed">
-                    {TRANSLATIONS.premiumDesc[uiLanguage]}
-                  </p>
-                  <button
-                    onClick={upgradeToPremium}
-                    className="w-full py-2 bg-[#31d190] hover:bg-[#28b079] text-[#1E2A38] font-bold rounded-lg text-sm transition-colors shadow-lg shadow-[#31d190]/20"
-                  >
-                    {TRANSLATIONS.upgradeBtn[uiLanguage]}
-                  </button>
-                  <p className="text-[10px] text-slate-500 mt-2 text-center">
-                    (Mock Payment: Click to instantly upgrade for testing)
-                  </p>
-                </div>
-              </div>
-            )}
+            <button
+                onClick={() => handleModeChange(AppMode.SCRIPT)}
+                className={`flex-1 py-4 flex items-center justify-center gap-3 text-lg font-bold transition-all relative outline-none ${
+                formData.mode === AppMode.SCRIPT
+                    ? 'text-[#1E2A38] dark:text-white bg-slate-50 dark:bg-[#0f172a]/30'
+                    : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0f172a]/20'
+                }`}
+            >
+                {user.plan === 'premium' ? (
+                  <Video size={20} className={formData.mode === AppMode.SCRIPT ? 'text-[#31d190]' : ''} />
+                ) : (
+                  <Lock size={18} className="text-slate-400" />
+                )}
+                <span className="flex items-center gap-2">
+                  {TRANSLATIONS.modeScript[uiLanguage]}
+                  {user.plan !== 'premium' && (
+                    <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[10px] uppercase font-bold tracking-wide">Premium</span>
+                  )}
+                </span>
+                
+                {formData.mode === AppMode.SCRIPT && (
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-[#31d190]"></div>
+                )}
+            </button>
+        </div>
+      </div>
 
-            {/* Framework Selection (Filtered by Mode) */}
-            <section>
-              <FrameworkSelector 
-                selected={formData.framework} 
-                onSelect={(fw) => setFormData(prev => ({ ...prev, framework: fw }))}
-                currentLang={uiLanguage}
-                mode={formData.mode}
-              />
-            </section>
+      <main className="flex-grow w-full px-4 md:px-8 py-8 space-y-8">
+            
+        {/* Brand Manager Section */}
+        <section className="animate-fade-in-up">
+          <BrandManager 
+            brands={brands}
+            selectedBrandId={selectedBrandId}
+            onSelectBrand={setSelectedBrandId}
+            onAddBrand={handleAddBrand}
+            onDeleteBrand={handleDeleteBrand}
+            currentLang={uiLanguage}
+          />
+        </section>
 
-            {/* Input Form */}
-            <section>
-              <InputForm 
-                request={formData} 
-                onChange={setFormData} 
-                onSubmit={handleGenerate}
-                isLoading={loading}
+        {/* Framework Selection */}
+        <section className="animate-fade-in-up" style={{animationDelay: '0.1s'}}>
+          <FrameworkSelector 
+            selected={formData.framework} 
+            onSelect={(fw) => setFormData(prev => ({ ...prev, framework: fw }))}
+            currentLang={uiLanguage}
+            mode={formData.mode}
+          />
+        </section>
+
+        {/* Input Form */}
+        <section className="animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+          <InputForm 
+            request={formData} 
+            onChange={setFormData} 
+            onSubmit={handleGenerate}
+            isLoading={loading}
+            currentUiLang={uiLanguage}
+            selectedBrand={brands.find(b => b.id === selectedBrandId)}
+          />
+        </section>
+
+        {/* Output Display (Only show if content exists) */}
+        {generatedContent && (
+           <section ref={resultRef} className="animate-fade-in-up" style={{animationDelay: '0.3s'}}>
+             <div className="w-full h-px bg-slate-200 dark:bg-slate-700 my-8"></div>
+             <OutputDisplay 
+                content={generatedContent} 
                 currentUiLang={uiLanguage}
-                selectedBrand={brands.find(b => b.id === selectedBrandId)}
+                outputLang={formData.language}
+                onClear={handleClear}
               />
-            </section>
-          </div>
-
-          {/* Section 2: OUTPUT DISPLAY (Full Width, Below Inputs) */}
-          <div ref={resultRef}>
-            {generatedContent && (
-               <div className="animate-fade-in-up">
-                 <div className="h-px bg-slate-200 dark:bg-slate-700 w-full mb-8"></div>
-                 <OutputDisplay 
-                    content={generatedContent} 
-                    currentUiLang={uiLanguage}
-                    outputLang={formData.language}
-                    onClear={handleClear}
-                 />
-               </div>
-            )}
-          </div>
-
+           </section>
+        )}
       </main>
       
       {/* Footer with Branding */}

@@ -217,6 +217,53 @@ export const TRANSLATIONS = {
     [Language.EN]: 'Select a Brand Profile (Optional)',
     [Language.MY]: 'Brand Profile ရွေးပါ (မရွေးလဲရသည်)',
     [Language.TH]: 'เลือกโปรไฟล์แบรนด์ (ไม่บังคับ)'
+  },
+  // Login & Premium
+  loginTitle: {
+    [Language.EN]: 'Welcome to CopyCraft',
+    [Language.MY]: 'CopyCraft မှ ကြိုဆိုပါသည်',
+    [Language.TH]: 'ยินดีต้อนรับสู่ CopyCraft'
+  },
+  loginBtn: {
+    [Language.EN]: 'Sign in with Google',
+    [Language.MY]: 'Google ဖြင့် အကောင့်ဝင်ပါ',
+    [Language.TH]: 'เข้าสู่ระบบด้วย Google'
+  },
+  loginSubtitle: {
+    [Language.EN]: 'Sign in to save your brands and access premium features.',
+    [Language.MY]: 'Brand များကိုမှတ်ထားရန်နှင့် Premium စနစ်သုံးရန် အကောင့်ဝင်ပါ။',
+    [Language.TH]: 'ลงชื่อเข้าใช้เพื่อบันทึกแบรนด์ของคุณและเข้าถึงฟีเจอร์พรีเมียม'
+  },
+  premiumLock: {
+    [Language.EN]: 'Premium Feature',
+    [Language.MY]: 'Premium အသုံးပြုသူများသာ',
+    [Language.TH]: 'สำหรับสมาชิกพรีเมียม'
+  },
+  premiumDesc: {
+    [Language.EN]: 'Upgrade to unlock Script Writing for Videos, Reels, and more.',
+    [Language.MY]: 'Video Script များနှင့် အခြားဝန်ဆောင်မှုများသုံးရန် Premium သို့ပြောင်းပါ။',
+    [Language.TH]: 'อัปเกรดเพื่อปลดล็อกการเขียนบทสำหรับวิดีโอและอื่นๆ'
+  },
+  upgradeBtn: {
+    [Language.EN]: 'Unlock Premium',
+    [Language.MY]: 'Premium ဝယ်ယူမည်',
+    [Language.TH]: 'อัปเกรดเป็นพรีเมียม'
+  },
+  // Access Denied
+  accessDeniedTitle: {
+    [Language.EN]: 'Access Denied',
+    [Language.MY]: 'ဝင်ရောက်ခွင့်မရှိပါ',
+    [Language.TH]: 'ปฏิเสธการเข้าถึง'
+  },
+  accessDeniedDesc: {
+    [Language.EN]: 'Your email is not on the allowed list. Please contact the administrator.',
+    [Language.MY]: 'သင့် Email သည် အသုံးပြုခွင့်စာရင်းတွင် မပါဝင်ပါ။ Admin ကိုဆက်သွယ်ပါ။',
+    [Language.TH]: 'อีเมลของคุณไม่อยู่ในรายการที่อนุญาต โปรดติดต่อผู้ดูแลระบบ'
+  },
+  logoutBtn: {
+    [Language.EN]: 'Log Out',
+    [Language.MY]: 'အကောင့်ထွက်မည်',
+    [Language.TH]: 'ออกจากระบบ'
   }
 };
 

@@ -21,7 +21,7 @@ export const FrameworkSelector: React.FC<FrameworkSelectorProps> = ({ selected, 
       <label className="block text-sm font-bold text-[#1E2A38] dark:text-slate-200">
         {TRANSLATIONS.selectFramework[currentLang]}
       </label>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
         {displayedFrameworks.map((fw) => {
           const details = FRAMEWORK_DETAILS[fw];
           const Icon = details.icon;
@@ -32,7 +32,7 @@ export const FrameworkSelector: React.FC<FrameworkSelectorProps> = ({ selected, 
               key={fw}
               onClick={() => onSelect(fw)}
               type="button"
-              className={`relative flex items-start gap-3 p-4 rounded-xl border transition-all duration-200 text-left group
+              className={`relative flex items-start gap-3 p-4 rounded-xl border transition-all duration-200 text-left group h-full
                 ${isSelected 
                   ? 'border-[#31d190] bg-[#31d190]/5 ring-1 ring-[#31d190] dark:bg-[#31d190]/10' 
                   : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-[#1E2A38] hover:border-[#31d190]/50 dark:hover:border-[#31d190]/50 hover:shadow-md'
