@@ -204,7 +204,7 @@ const AppContent: React.FC = () => {
           toggleTheme={() => setIsDarkMode(!isDarkMode)} 
       />
 
-      <main className="flex-grow w-full px-4 md:px-8 lg:px-12 py-8 space-y-8">
+      <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 space-y-8">
             
         {/* PILL STYLE MODE SWITCHER */}
         <div className="flex justify-center">
