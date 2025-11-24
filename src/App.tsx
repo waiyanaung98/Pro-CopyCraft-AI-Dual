@@ -82,8 +82,6 @@ const AppContent: React.FC = () => {
   };
 
   const handleModeChange = (mode: AppMode) => {
-    // Premium lock removed as requested
-    
     // Reset framework to default of that mode when switching
     const defaultFramework = mode === AppMode.COPY ? Framework.AIDA : Framework.TIKTOK_HOOK;
     setFormData(prev => ({
@@ -206,7 +204,7 @@ const AppContent: React.FC = () => {
           toggleTheme={() => setIsDarkMode(!isDarkMode)} 
       />
 
-      <main className="flex-grow w-full max-w-[1600px] mx-auto px-4 md:px-8 py-8 space-y-8">
+      <main className="flex-grow w-full px-4 md:px-8 lg:px-12 py-8 space-y-8">
             
         {/* PILL STYLE MODE SWITCHER */}
         <div className="flex justify-center">
