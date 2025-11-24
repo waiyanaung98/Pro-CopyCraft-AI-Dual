@@ -7,7 +7,7 @@ import { BrandManager } from './components/BrandManager';
 import { Language, Framework, Tone, ContentRequest, ContentPillar, BrandProfile, AppMode } from './types';
 import { generateCopy } from './services/geminiService';
 import { TRANSLATIONS, DEFAULT_BRANDS } from './constants';
-import { PenTool, Video, Lock, Crown, ShieldAlert } from 'lucide-react';
+import { PenTool, Video, ShieldAlert } from 'lucide-react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Main Content Component wrapped inside AuthProvider
@@ -82,11 +82,8 @@ const AppContent: React.FC = () => {
   };
 
   const handleModeChange = (mode: AppMode) => {
-    // Check for Premium Requirement for Script Writing
-    if (mode === AppMode.SCRIPT && user?.plan !== 'premium') {
-      return; // Do nothing, or show modal
-    }
-
+    // Premium lock removed as requested
+    
     // Reset framework to default of that mode when switching
     const defaultFramework = mode === AppMode.COPY ? Framework.AIDA : Framework.TIKTOK_HOOK;
     setFormData(prev => ({
@@ -203,60 +200,42 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
       
-      {/* COMBINED STICKY HEADER & TABS CONTAINER */}
-      <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
-        <Header 
-            currentLang={uiLanguage} 
-            isDarkMode={isDarkMode} 
-            toggleTheme={() => setIsDarkMode(!isDarkMode)} 
-        />
+      <Header 
+          currentLang={uiLanguage} 
+          isDarkMode={isDarkMode} 
+          toggleTheme={() => setIsDarkMode(!isDarkMode)} 
+      />
 
-        {/* FULL WIDTH MODE TABS */}
-        <div className="flex w-full">
-            <button
-                onClick={() => handleModeChange(AppMode.COPY)}
-                className={`flex-1 py-4 flex items-center justify-center gap-3 text-lg font-bold transition-all relative outline-none ${
-                formData.mode === AppMode.COPY
-                    ? 'text-[#1E2A38] dark:text-white bg-slate-50 dark:bg-[#0f172a]/30'
-                    : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0f172a]/20'
-                }`}
-            >
-                <PenTool size={20} className={formData.mode === AppMode.COPY ? 'text-[#31d190]' : ''} />
-                {TRANSLATIONS.modeCopy[uiLanguage]}
-                {formData.mode === AppMode.COPY && (
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-[#31d190]"></div>
-                )}
-            </button>
-
-            <button
-                onClick={() => handleModeChange(AppMode.SCRIPT)}
-                className={`flex-1 py-4 flex items-center justify-center gap-3 text-lg font-bold transition-all relative outline-none ${
-                formData.mode === AppMode.SCRIPT
-                    ? 'text-[#1E2A38] dark:text-white bg-slate-50 dark:bg-[#0f172a]/30'
-                    : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-[#0f172a]/20'
-                }`}
-            >
-                {user.plan === 'premium' ? (
-                  <Video size={20} className={formData.mode === AppMode.SCRIPT ? 'text-[#31d190]' : ''} />
-                ) : (
-                  <Lock size={18} className="text-slate-400" />
-                )}
-                <span className="flex items-center gap-2">
-                  {TRANSLATIONS.modeScript[uiLanguage]}
-                  {user.plan !== 'premium' && (
-                    <span className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[10px] uppercase font-bold tracking-wide">Premium</span>
-                  )}
-                </span>
-                
-                {formData.mode === AppMode.SCRIPT && (
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-[#31d190]"></div>
-                )}
-            </button>
-        </div>
-      </div>
-
-      <main className="flex-grow w-full px-4 md:px-8 py-8 space-y-8">
+      <main className="flex-grow w-full max-w-[1600px] mx-auto px-4 md:px-8 py-8 space-y-8">
             
+        {/* PILL STYLE MODE SWITCHER */}
+        <div className="flex justify-center">
+            <div className="inline-flex bg-slate-100 dark:bg-[#1E2A38] p-1.5 rounded-full shadow-inner border border-slate-200 dark:border-slate-700">
+                <button
+                    onClick={() => handleModeChange(AppMode.COPY)}
+                    className={`px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-all duration-200 ${
+                        formData.mode === AppMode.COPY
+                            ? 'bg-[#31d190] text-white shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-[#31d190]'
+                    }`}
+                >
+                    <PenTool size={16} />
+                    {TRANSLATIONS.modeCopy[uiLanguage]}
+                </button>
+                <button
+                    onClick={() => handleModeChange(AppMode.SCRIPT)}
+                    className={`px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2 transition-all duration-200 ${
+                        formData.mode === AppMode.SCRIPT
+                            ? 'bg-[#31d190] text-white shadow-md'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-[#31d190]'
+                    }`}
+                >
+                    <Video size={16} />
+                    {TRANSLATIONS.modeScript[uiLanguage]}
+                </button>
+            </div>
+        </div>
+
         {/* Brand Manager Section */}
         <section className="animate-fade-in-up">
           <BrandManager 
