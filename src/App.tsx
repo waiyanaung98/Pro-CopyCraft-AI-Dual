@@ -209,7 +209,7 @@ const AppContent: React.FC = () => {
         />
       </div>
 
-      {/* Main Content - max-w-4xl for narrower, focused width */}
+      {/* Main Content - max-w-4xl for balanced width */}
       <main className="flex-grow w-full max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
             
         {/* PILL STYLE MODE SWITCHER */}

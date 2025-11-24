@@ -92,4 +92,4 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
       </div>
     </header>
   );
-};
+}
