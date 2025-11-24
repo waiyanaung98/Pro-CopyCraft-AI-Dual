@@ -116,6 +116,7 @@ const AppContent: React.FC = () => {
 
   const handleClear = () => {
     setGeneratedContent(null);
+    setGeneratedContent(null);
     setFormData(prev => ({ 
       ...prev, 
       topic: '', 
