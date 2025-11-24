@@ -7,7 +7,7 @@ import { BrandManager } from './components/BrandManager';
 import { Language, Framework, Tone, ContentRequest, ContentPillar, BrandProfile, AppMode } from './types';
 import { generateCopy } from './services/geminiService';
 import { TRANSLATIONS, DEFAULT_BRANDS } from './constants';
-import { PenTool, Video, ShieldAlert } from 'lucide-react';
+import { PenTool, Video, ShieldAlert, Gift } from 'lucide-react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Main Content Component wrapped inside AuthProvider
@@ -200,7 +200,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
       
-      {/* STICKY HEADER - NO TABS */}
+      {/* STICKY HEADER - CLEAN */}
       <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
         <Header 
             currentLang={uiLanguage} 
@@ -236,6 +236,16 @@ const AppContent: React.FC = () => {
                 >
                     <Video size={16} />
                     {TRANSLATIONS.modeScript[uiLanguage]}
+                    
+                    {/* FREE GIFT BADGE */}
+                    <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wide shadow-sm flex items-center gap-1 ${
+                       formData.mode === AppMode.SCRIPT 
+                       ? 'bg-white text-[#31d190]' 
+                       : 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white'
+                    }`}>
+                      <Gift size={10} />
+                      {TRANSLATIONS.freeGift[uiLanguage]}
+                    </span>
                 </button>
             </div>
         </div>

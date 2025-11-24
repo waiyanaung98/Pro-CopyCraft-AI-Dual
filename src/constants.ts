@@ -138,6 +138,11 @@ export const TRANSLATIONS = {
     [Language.MY]: 'Script Writing',
     [Language.TH]: 'การเขียนบท'
   },
+  freeGift: {
+    [Language.EN]: 'Free Gift',
+    [Language.MY]: 'လက်ဆောင်',
+    [Language.TH]: 'ของขวัญฟรี'
+  },
   selectFramework: {
     [Language.EN]: 'Select Framework',
     [Language.MY]: 'Framework ရွေးချယ်ပါ',
