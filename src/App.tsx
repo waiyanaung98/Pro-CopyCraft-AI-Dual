@@ -138,16 +138,34 @@ const AppContent: React.FC = () => {
   if (isAccessDenied) {
       return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col items-center justify-center p-4 font-sans transition-colors duration-300">
+            {/* Public Header for Theme Toggle */}
+            <div className="absolute top-4 right-4">
+               <Header 
+                  currentLang={uiLanguage} 
+                  isDarkMode={isDarkMode} 
+                  toggleTheme={() => setIsDarkMode(!isDarkMode)} 
+                  simpleMode={true}
+               />
+            </div>
+
             <div className="bg-white dark:bg-[#1E2A38] p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-red-200 dark:border-red-900/50">
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-red-500 bg-red-100 dark:bg-red-900/30 mx-auto mb-6">
                     <ShieldAlert size={32} />
                 </div>
                 <h1 className="text-2xl font-bold text-[#1E2A38] dark:text-white mb-2">
-                    {TRANSLATIONS.accessDeniedTitle[uiLanguage]}
+                    Subscription Required
                 </h1>
-                <p className="text-slate-500 dark:text-slate-400 mb-8">
-                    {TRANSLATIONS.accessDeniedDesc[uiLanguage]}
+                <p className="text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+                    This exclusive tool is available for subscribed members only.
                 </p>
+                
+                <div className="bg-slate-50 dark:bg-[#0f172a] p-4 rounded-xl border border-slate-200 dark:border-slate-700 mb-6">
+                   <p className="text-sm text-slate-500 dark:text-slate-400 mb-2 font-medium">To purchase access, please contact via Viber:</p>
+                   <a href="viber://contact?number=%2B66805631811" className="text-lg font-bold text-[#31d190] hover:underline block">
+                     (+66) 80 563 1811
+                   </a>
+                </div>
+
                 <button
                     onClick={logout}
                     className="w-full flex items-center justify-center gap-3 bg-white dark:bg-[#0f172a] border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#1E2A38] dark:text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm"
@@ -162,8 +180,19 @@ const AppContent: React.FC = () => {
   // -- LOGIN SCREEN --
   if (!user) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col items-center justify-center p-4 font-sans transition-colors duration-300">
-         <div className="bg-white dark:bg-[#1E2A38] p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-slate-200 dark:border-slate-700">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col items-center justify-center p-4 font-sans transition-colors duration-300 relative">
+         
+         {/* Top Right Theme Toggle */}
+         <div className="absolute top-0 w-full">
+            <Header 
+              currentLang={uiLanguage} 
+              isDarkMode={isDarkMode} 
+              toggleTheme={() => setIsDarkMode(!isDarkMode)} 
+              simpleMode={true}
+            />
+         </div>
+
+         <div className="bg-white dark:bg-[#1E2A38] p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-slate-200 dark:border-slate-700 mt-10">
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white shadow-lg bg-gradient-to-br from-[#1E2A38] to-[#31d190] mx-auto mb-6">
                <PenTool size={32} />
             </div>
@@ -185,12 +214,6 @@ const AppContent: React.FC = () => {
               </svg>
               {TRANSLATIONS.loginBtn[uiLanguage]}
             </button>
-            <button 
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="mt-6 flex items-center justify-center gap-2 mx-auto text-sm text-slate-400 hover:text-[#31d190] transition-colors"
-            >
-              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-            </button>
          </div>
       </div>
     );
@@ -209,8 +232,8 @@ const AppContent: React.FC = () => {
         />
       </div>
 
-      {/* Main Content - max-w-4xl for balanced width */}
-      <main className="flex-grow w-full max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
+      {/* Main Content - FORCE 4XL WIDTH with Inline Style */}
+      <main className="flex-grow w-full mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8" style={{ maxWidth: '56rem' }}>
             
         {/* PILL STYLE MODE SWITCHER */}
         <div className="flex justify-center mt-2 mb-6">

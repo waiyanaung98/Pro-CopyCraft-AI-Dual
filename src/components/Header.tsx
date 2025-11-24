@@ -8,14 +8,30 @@ interface HeaderProps {
   currentLang: Language;
   isDarkMode: boolean;
   toggleTheme: () => void;
+  simpleMode?: boolean; // Added for login screen usage
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleTheme }) => {
+export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleTheme, simpleMode = false }) => {
   const { user, logout, upgradeToPremium } = useAuth();
+
+  // Simple Mode only shows logo and theme toggle (for login/access denied screens)
+  if (simpleMode) {
+    return (
+      <header className="w-full p-4 flex justify-end">
+         <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-[#1E2A38] shadow-sm border border-slate-200 dark:border-slate-700"
+            aria-label="Toggle Dark Mode"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+      </header>
+    );
+  }
 
   return (
     <header className="bg-white dark:bg-[#1E2A38] border-b border-gray-100 dark:border-gray-800 sticky top-0 z-30 shadow-sm transition-colors duration-300">
-      <div className="w-full max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center justify-between">
+      <div className="w-full mx-auto px-4 md:px-6 lg:px-8 py-4 flex items-center justify-between" style={{ maxWidth: '56rem' }}>
         <div className="flex items-center gap-3">
           {/* Gradient Logo Box */}
           <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg bg-gradient-to-br from-[#1E2A38] to-[#31d190]">
@@ -33,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
         
         <div className="flex items-center gap-3">
            
-           {/* Night Mode Toggle - Moved to Left of the group */}
+           {/* Night Mode Toggle - Left */}
            <button
             onClick={toggleTheme}
             className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mr-1"
@@ -42,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-           {/* Premium Badge/Button - Center of the group */}
+           {/* Premium Badge - Center */}
            {user && (
              <div className="flex items-center gap-3 mr-1">
                {user.plan === 'free' ? (
@@ -62,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
              </div>
            )}
 
-          {/* User Profile (Rightmost) */}
+          {/* User Profile - Right */}
           {user ? (
             <div className="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-700">
                <div className="text-right hidden md:block">
