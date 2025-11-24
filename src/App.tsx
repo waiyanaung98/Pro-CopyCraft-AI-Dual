@@ -7,12 +7,12 @@ import { BrandManager } from './components/BrandManager';
 import { Language, Framework, Tone, ContentRequest, ContentPillar, BrandProfile, AppMode } from './types';
 import { generateCopy } from './services/geminiService';
 import { TRANSLATIONS, DEFAULT_BRANDS } from './constants';
-import { PenTool, Video, Lock, Crown, Sun, Moon } from 'lucide-react';
+import { PenTool, Video, Lock, Crown, Sun, Moon, ShieldAlert } from 'lucide-react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Main Content Component wrapped inside AuthProvider later
 const AppContent: React.FC = () => {
-  const { user, loading: authLoading, login, upgradeToPremium } = useAuth();
+  const { user, loading: authLoading, isAccessDenied, login, logout, upgradeToPremium } = useAuth();
   
   // UI Language default to English
   const [uiLanguage] = useState<Language>(Language.EN);
@@ -139,6 +139,31 @@ const AppContent: React.FC = () => {
     );
   }
 
+  // -- ACCESS DENIED SCREEN (Whitelisted Check) --
+  if (isAccessDenied) {
+      return (
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col items-center justify-center p-4 font-sans transition-colors duration-300">
+            <div className="bg-white dark:bg-[#1E2A38] p-8 rounded-2xl shadow-xl max-w-md w-full text-center border border-red-200 dark:border-red-900/50">
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-red-500 bg-red-100 dark:bg-red-900/30 mx-auto mb-6">
+                    <ShieldAlert size={32} />
+                </div>
+                <h1 className="text-2xl font-bold text-[#1E2A38] dark:text-white mb-2">
+                    {TRANSLATIONS.accessDeniedTitle[uiLanguage]}
+                </h1>
+                <p className="text-slate-500 dark:text-slate-400 mb-8">
+                    {TRANSLATIONS.accessDeniedDesc[uiLanguage]}
+                </p>
+                <button
+                    onClick={logout}
+                    className="w-full flex items-center justify-center gap-3 bg-white dark:bg-[#0f172a] border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800 text-[#1E2A38] dark:text-white font-bold py-3 px-4 rounded-xl transition-all shadow-sm"
+                >
+                    {TRANSLATIONS.logoutBtn[uiLanguage]}
+                </button>
+            </div>
+        </div>
+      );
+  }
+
   // -- LOGIN SCREEN --
   if (!user) {
     return (
@@ -186,12 +211,11 @@ const AppContent: React.FC = () => {
         toggleTheme={() => setIsDarkMode(!isDarkMode)} 
       />
 
-      <main className="flex-grow max-w-6xl mx-auto px-4 py-8 w-full">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      {/* Main Container - Full Width Stacked Layout */}
+      <main className="flex-grow max-w-3xl mx-auto px-4 py-8 w-full space-y-8">
           
-          {/* Left Column: Controls */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Section 1: CONTROLS & INPUTS */}
+          <div className="space-y-6">
             
             {/* Brand Manager Section */}
             <section>
@@ -288,38 +312,21 @@ const AppContent: React.FC = () => {
             </section>
           </div>
 
-          {/* Right Column: Output */}
-          <div className="lg:col-span-7" ref={resultRef}>
-            {generatedContent ? (
-              <OutputDisplay 
-                content={generatedContent} 
-                currentUiLang={uiLanguage}
-                outputLang={formData.language}
-                onClear={handleClear}
-              />
-            ) : (
-              /* Empty State Placeholder */
-              <div className="h-full min-h-[400px] bg-white dark:bg-[#1E2A38] rounded-2xl border border-slate-200 dark:border-slate-700 border-dashed flex flex-col items-center justify-center text-center p-8 text-slate-400 dark:text-slate-500 sticky top-24 transition-colors">
-                <div className="w-16 h-16 bg-slate-50 dark:bg-[#0f172a] rounded-full flex items-center justify-center mb-4">
-                  {formData.mode === AppMode.SCRIPT ? (
-                     <Video className="w-8 h-8 text-slate-300 dark:text-slate-600" />
-                  ) : (
-                     <PenTool className="w-8 h-8 text-slate-300 dark:text-slate-600" />
-                  )}
-                </div>
-                <h3 className="text-lg font-medium text-[#1E2A38] dark:text-white mb-2">
-                  {formData.mode === AppMode.SCRIPT ? 'Create Your Next Viral Script' : 'Ready to Create Copy'}
-                </h3>
-                <p className="max-w-xs mx-auto text-sm text-slate-500 dark:text-slate-400">
-                  {formData.mode === AppMode.SCRIPT 
-                    ? "Select a script style, add context, and let the AI direct your video."
-                    : "Select a framework, choose your pillar, and let the AI write for you."}
-                </p>
-              </div>
+          {/* Section 2: OUTPUT DISPLAY (Full Width, Below Inputs) */}
+          <div ref={resultRef}>
+            {generatedContent && (
+               <div className="animate-fade-in-up">
+                 <div className="h-px bg-slate-200 dark:bg-slate-700 w-full mb-8"></div>
+                 <OutputDisplay 
+                    content={generatedContent} 
+                    currentUiLang={uiLanguage}
+                    outputLang={formData.language}
+                    onClear={handleClear}
+                 />
+               </div>
             )}
           </div>
 
-        </div>
       </main>
       
       {/* Footer with Branding */}

@@ -248,6 +248,22 @@ export const TRANSLATIONS = {
     [Language.EN]: 'Unlock Premium',
     [Language.MY]: 'Premium ဝယ်ယူမည်',
     [Language.TH]: 'อัปเกรดเป็นพรีเมียม'
+  },
+  // Access Denied
+  accessDeniedTitle: {
+    [Language.EN]: 'Access Denied',
+    [Language.MY]: 'ဝင်ရောက်ခွင့်မရှိပါ',
+    [Language.TH]: 'ปฏิเสธการเข้าถึง'
+  },
+  accessDeniedDesc: {
+    [Language.EN]: 'Your email is not on the allowed list. Please contact the administrator.',
+    [Language.MY]: 'သင့် Email သည် အသုံးပြုခွင့်စာရင်းတွင် မပါဝင်ပါ။ Admin ကိုဆက်သွယ်ပါ။',
+    [Language.TH]: 'อีเมลของคุณไม่อยู่ในรายการที่อนุญาต โปรดติดต่อผู้ดูแลระบบ'
+  },
+  logoutBtn: {
+    [Language.EN]: 'Log Out',
+    [Language.MY]: 'အကောင့်ထွက်မည်',
+    [Language.TH]: 'ออกจากระบบ'
   }
 };
 
