@@ -198,7 +198,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
       
-      {/* STICKY HEADER ONLY */}
+      {/* STICKY HEADER ONLY - NO TABS HERE */}
       <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
         <Header 
             currentLang={uiLanguage} 
