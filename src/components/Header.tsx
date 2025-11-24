@@ -33,8 +33,18 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
         
         <div className="flex items-center gap-3">
            
+           {/* Night Mode Toggle - Moved to Left of the group */}
+           <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors mr-1"
+            aria-label="Toggle Dark Mode"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+
+           {/* Premium Badge/Button - Center of the group */}
            {user && (
-             <div className="flex items-center gap-3 mr-2">
+             <div className="flex items-center gap-3 mr-1">
                {user.plan === 'free' ? (
                  <button 
                   onClick={upgradeToPremium}
@@ -52,14 +62,7 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
              </div>
            )}
 
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            aria-label="Toggle Dark Mode"
-          >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-          </button>
-
+          {/* User Profile (Rightmost) */}
           {user ? (
             <div className="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-slate-700">
                <div className="text-right hidden md:block">
@@ -68,9 +71,9 @@ export const Header: React.FC<HeaderProps> = ({ currentLang, isDarkMode, toggleT
                </div>
                <div className="relative group">
                  {user.photoURL ? (
-                   <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700" />
+                   <img src={user.photoURL} alt="Profile" className="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-700 cursor-pointer" />
                  ) : (
-                   <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500">
+                   <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 cursor-pointer">
                      <UserIcon size={16} />
                    </div>
                  )}

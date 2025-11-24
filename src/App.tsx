@@ -209,7 +209,7 @@ const AppContent: React.FC = () => {
         />
       </div>
 
-      {/* Main Content - max-w-4xl for balanced, narrower width */}
+      {/* Main Content - max-w-4xl for balanced width */}
       <main className="flex-grow w-full max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 space-y-8">
             
         {/* PILL STYLE MODE SWITCHER */}
@@ -301,7 +301,7 @@ const AppContent: React.FC = () => {
       {/* Footer with Branding */}
       <footer className="py-6 text-center border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1E2A38] mt-auto transition-colors">
         <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-          Powered by <span className="text-[#1E2A38] dark:text-[#31d190] font-bold">PrimeNova Digital Solution</span>
+          Powered by <a href="https://web.facebook.com/PrimeNovaDigitalSolution" target="_blank" rel="noopener noreferrer" className="text-[#1E2A38] dark:text-[#31d190] font-bold hover:underline">PrimeNova Digital Solution</a>
         </p>
       </footer>
     </div>
