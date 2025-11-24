@@ -198,11 +198,13 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#0f172a] flex flex-col font-sans transition-colors duration-300">
       
-      <Header 
-          currentLang={uiLanguage} 
-          isDarkMode={isDarkMode} 
-          toggleTheme={() => setIsDarkMode(!isDarkMode)} 
-      />
+      <div className="sticky top-0 z-40 bg-white dark:bg-[#1E2A38] shadow-sm transition-colors border-b border-gray-100 dark:border-gray-800">
+        <Header 
+            currentLang={uiLanguage} 
+            isDarkMode={isDarkMode} 
+            toggleTheme={() => setIsDarkMode(!isDarkMode)} 
+        />
+      </div>
 
       <main className="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 space-y-8">
             
